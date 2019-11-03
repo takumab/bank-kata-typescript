@@ -12,17 +12,21 @@ class StatementPrinter implements StatementPrinterInterface {
     }
 
     print(transactions: Transaction[]): void {
-        let runningBalance: number = 0;
-        const transactionList = transactions.map((transaction) => {
-            runningBalance += transaction.amount;
-            return {date: transaction.date, amount: transaction.amount, balance: runningBalance}
-        });
+        const transactionList = this.runningBalanceFor(transactions);
         transactionList.reverse();
 
         this.mconsole.printLine("DATE | AMOUNT | BALANCE");
         transactionList.forEach((transaction) => {
             this.mconsole.printLine(`${moment(transaction.date).format('DD/MM/YYYY')} | ${transaction.amount} | ${transaction.balance}`)
         })
+    }
+
+    private runningBalanceFor(transactions: Transaction[]): { date: Date; amount: number; balance: number }[] {
+        let runningBalance: number = 0;
+        return transactions.map((transaction) => {
+            runningBalance += transaction.amount;
+            return {date: transaction.date, amount: transaction.amount, balance: runningBalance}
+        });
     }
 }
 
