@@ -1,7 +1,8 @@
 import Account from "./account";
-import {MyConsole} from "./myConsole";
+import MyConsole from "./myConsole";
 import TransactionRepository from "./transactionRepository";
 import BankClock from "./bankClock";
+import StatementPrinter from "./statementPrinter";
 
 describe('Acceptance Test', () => {
     describe('Bank Account', () => {
@@ -18,7 +19,7 @@ describe('Acceptance Test', () => {
             }));
             const mconsole = new MockConsole();
 
-            const account = new Account(new TransactionRepository(), mockClock, statementPrinter);
+            const account = new Account(new TransactionRepository(), mockClock, new StatementPrinter(mconsole));
             account.deposit(1000);
             account.withdraw(-100);
             account.deposit(500);
@@ -32,4 +33,4 @@ describe('Acceptance Test', () => {
             expect(mconsole.printLine).toBeCalledWith("01/04/2014 | 1000 | 1000");
         });
     })
-})
+});

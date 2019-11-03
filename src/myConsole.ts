@@ -1,5 +1,7 @@
-export class MyConsole {
-    printLine(printLine: any) {
+ class MyConsole {
+    printLine(text: string): void {
         throw new Error("Method not implemented.");
     }
 }
+
+export default MyConsole;

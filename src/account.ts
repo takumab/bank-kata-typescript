@@ -1,15 +1,14 @@
-import TransactionRepository from "./transactionRepository";
 import Transaction from "./transaction";
 import BankClock from "./bankClock";
 import TransactionRepositoryInterface from "./transactionRepositoryInterface";
-import {StatementPrinter} from "./statementPrinter";
+import {StatementPrinterInterface} from "./statementPrinterInterface";
 
 class Account {
     private transactionRepository: TransactionRepositoryInterface;
-    private statementPrinter: StatementPrinter;
+    private statementPrinter: StatementPrinterInterface;
     private clock: BankClock;
 
-    constructor(transactionRepository: TransactionRepositoryInterface, clock: BankClock, statementPrinter: StatementPrinter) {
+    constructor(transactionRepository: TransactionRepositoryInterface, clock: BankClock, statementPrinter: StatementPrinterInterface) {
         this.statementPrinter = statementPrinter;
         this.clock = clock;
         this.transactionRepository = transactionRepository;
@@ -27,7 +26,8 @@ class Account {
 
 
     printStatement(): void {
-        this.transactionRepository.all()
+        const transactions = this.transactionRepository.all();
+        this.statementPrinter.print(transactions)
     }
 }
 

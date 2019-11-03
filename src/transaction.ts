@@ -1,6 +1,6 @@
 class Transaction {
-    private amount: number;
-    private date: Date;
+    readonly amount: number;
+    readonly date: Date;
 
     constructor(amount: number, date: Date) {
         this.amount = amount;
