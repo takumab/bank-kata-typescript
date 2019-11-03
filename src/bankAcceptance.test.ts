@@ -8,9 +8,9 @@ describe('Acceptance Test', () => {
     describe('Bank Account', () => {
         it('should print a bank statement', () => {
             const MockClock = jest.fn<BankClock, []>(() => ({
-                now: jest.fn().mockReturnValueOnce(new Date(2014, 5, 1))
-                    .mockReturnValueOnce(new Date(2014, 5, 2))
-                    .mockReturnValueOnce(new Date(2014, 5, 10))
+                now: jest.fn().mockReturnValueOnce(new Date(2014, 3, 1))
+                    .mockReturnValueOnce(new Date(2014, 3, 2))
+                    .mockReturnValueOnce(new Date(2014, 3, 10))
             }));
             const mockClock = new MockClock();
 
@@ -19,13 +19,14 @@ describe('Acceptance Test', () => {
             }));
             const mconsole = new MockConsole();
 
-            const account = new Account(new TransactionRepository(), mockClock, new StatementPrinter(mconsole));
+            const statementPrinter = new StatementPrinter(mconsole);
+
+            const account = new Account(new TransactionRepository(), mockClock, statementPrinter);
             account.deposit(1000);
             account.withdraw(-100);
             account.deposit(500);
 
             account.printStatement();
-
 
             expect(mconsole.printLine).toBeCalledWith("DATE | AMOUNT | BALANCE");
             expect(mconsole.printLine).toBeCalledWith("10/04/2014 | 500 | 1400");
