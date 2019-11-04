@@ -12,7 +12,7 @@ class StatementPrinter implements StatementPrinterInterface {
     }
 
     print(transactions: Transaction[]): void {
-        const transactionList = this.runningBalanceFor(transactions);
+        const transactionList = this.mapTransactionsToStatementLines(transactions);
         transactionList.reverse();
 
         this.mconsole.printLine("DATE | AMOUNT | BALANCE");
@@ -21,7 +21,7 @@ class StatementPrinter implements StatementPrinterInterface {
         })
     }
 
-    private runningBalanceFor(transactions: Transaction[]): { date: Date; amount: number; balance: number }[] {
+    private mapTransactionsToStatementLines(transactions: Transaction[]): { date: Date; amount: number; balance: number }[] {
         let runningBalance: number = 0;
         return transactions.map((transaction) => {
             runningBalance += transaction.amount;
